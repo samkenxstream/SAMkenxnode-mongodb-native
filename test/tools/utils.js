@@ -88,6 +88,11 @@ class EventCollector {
    */
   waitAndShiftEvent(eventName) {
     return new Promise((resolve, reject) => {
+      if (!this._events[eventName]) {
+        return reject(
+          `Error: attempted to listen for ${eventName} but no listener handler is set` + eventName
+        );
+      }
       if (this._events[eventName].length > 0) {
         return resolve(this._events[eventName].shift());
       }
